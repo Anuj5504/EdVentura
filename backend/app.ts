@@ -13,10 +13,9 @@ app.use(cookieParser());
 app.use(cors({origin:process.env.ORIGIN}));
 
 //routes
-
 app.use("/api/v1",userRouter);
-//testing api
 
+//testing api
 app.get("/test",(req:Request, res:Response, next:NextFunction)=>{
     res.status(200).json({
         success:true,

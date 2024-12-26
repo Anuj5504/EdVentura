@@ -9,7 +9,7 @@ userRouter.post('/activate-user',activateUser);
 
 userRouter.post('/login',loginUser);
 
-userRouter.get('/logout',isAuthenticated,authorizedRoles("admin"),logout);
+userRouter.get('/logout',isAuthenticated,logout);
 
 userRouter.get('/refresh-token',updateAccessToken);
 

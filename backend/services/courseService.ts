@@ -9,7 +9,6 @@ export const createCourse = catchAsyncError(async (data: any, res: Response, nex
             throw new Error("Missing required fields: name, description, or price");
         }
 
-        console.log("Creating course with data:", data);
         const course = await CourseModel.create(data);
 
         res.status(200).json({

@@ -23,7 +23,7 @@ const notificationSchema=new Schema<INotification>({
     },
     userId:{
         type:String,
-        required:true,
+        // required:true,
     },
 },{timestamps:true});
 

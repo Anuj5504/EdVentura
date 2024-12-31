@@ -6,6 +6,7 @@ import cors from "cors";
 import { ErrorMiddleware } from "./middleware/error";
 import userRouter from "./routes/userRoute";
 import courseRouter from "./routes/courseRoute";
+import orderRouter from "./routes/orderRoutes";
 
 app.use(express.json({ limit: "100mb" }));
 
@@ -14,8 +15,7 @@ app.use(cookieParser());
 app.use(cors({ origin: process.env.ORIGIN }));
 
 //routes
-app.use("/api/v1", userRouter);
-app.use("/api/v1", courseRouter);
+app.use("/api/v1", userRouter,courseRouter,orderRouter);
 
 //testing api
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {

@@ -1,4 +1,4 @@
-import mongoose,{Document,Model,Schema} from "mongoose";
+import mongoose,{Document,Model,Schema, Types} from "mongoose";
 import { IUser } from "./UserModel";
 
 interface IComment extends Document{
@@ -47,6 +47,7 @@ interface ICourse extends Document{
     courseData:ICouserData[],
     ratings?:number,
     purchased?:number,
+    _id: Types.ObjectId;
 }
 
 const reviewSchema=new Schema<IReview>({

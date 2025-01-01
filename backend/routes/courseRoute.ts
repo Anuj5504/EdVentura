@@ -21,4 +21,6 @@ courseRouter.put("/add-review/:id",isAuthenticated,addReview);
 
 courseRouter.put("/add-reply",isAuthenticated,authorizedRoles("admin"),addReply);
 
+courseRouter.get("/get-courses",isAuthenticated,authorizedRoles("admin"),getAllCourses);
+
 export default courseRouter;    

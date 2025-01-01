@@ -20,3 +20,20 @@ export const createCourse = catchAsyncError(async (data: any, res: Response, nex
         next(new ErrorHandler(error.message || "Server Error", 400));
     }
 });
+
+export const getAllCoursesService = async (res: Response) => { 
+    try {
+        const courses = await CourseModel.find().sort({ createdAt: -1 }); 
+
+        res.status(200).json({
+            success: true,
+            courses 
+        });
+    } catch (error:any) {
+        res.status(500).json({
+            success: false,
+            message: 'An error occurred while fetching courses.',
+            error: error.message
+        });
+    }
+};

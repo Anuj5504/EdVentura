@@ -9,9 +9,10 @@ import ejs from "ejs";
 import sendMail from "../utils/sendMails";
 import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 import { redis } from "../utils/redis";
-import { getUserById } from "../services/userService";
+import { getAllUsersService, getUserById } from "../services/userService";
 import { Types } from "mongoose";
 import cloudinary from "cloudinary";
+import { get } from "https";
 
 //register User
 
@@ -347,5 +348,15 @@ export const updateProfilePicture = catchAsyncError(async (req: Request, res: Re
         })
     } catch (error: any) {
         return next(new ErrorHandler(error.message, 400));
+    }
+});
+
+//get all users
+
+export const getAllUsers=catchAsyncError(async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        getAllUsersService(res);
+    }catch(error:any){
+        return next(new ErrorHandler(error.message,400));
     }
 })

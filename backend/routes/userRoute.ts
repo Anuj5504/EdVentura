@@ -1,5 +1,5 @@
 import  express  from "express";
-import { activateUser, getUserInfo, loginUser, logout, registerationUser, socialAuth, updateAccessToken, updatePassword, updateProfilePicture, updateUserInfo } from "../controllers/userController";
+import { activateUser, deleteUser, getUserInfo, loginUser, logout, registerationUser, socialAuth, updateAccessToken, updatePassword, updateProfilePicture, updateUserInfo, updateUserRole } from "../controllers/userController";
 import { authorizedRoles, isAuthenticated } from "../middleware/auth";
 import { getAllCoursesAuth } from "../controllers/courseController";
 const userRouter=express.Router();
@@ -25,6 +25,10 @@ userRouter.put('/update-password',isAuthenticated,updatePassword);
 userRouter.put('/update-avatar',isAuthenticated,updateProfilePicture);
 
 userRouter.get('/get-all-users',isAuthenticated,authorizedRoles("admin"),getAllCoursesAuth);
+
+userRouter.put('/update-user-role',isAuthenticated,authorizedRoles("admin"),updateUserRole);
+
+userRouter.delete('/delete-user',isAuthenticated,authorizedRoles("admin"),deleteUser);
 
 
 

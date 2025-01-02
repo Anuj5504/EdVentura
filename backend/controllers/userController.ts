@@ -9,10 +9,11 @@ import ejs from "ejs";
 import sendMail from "../utils/sendMails";
 import { accessTokenOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 import { redis } from "../utils/redis";
-import { getAllUsersService, getUserById } from "../services/userService";
+import { getAllUsersService, getUserById, updateUserRoleService } from "../services/userService";
 import { Types } from "mongoose";
 import cloudinary from "cloudinary";
 import { get } from "https";
+import exp from "constants";
 
 //register User
 
@@ -360,3 +361,38 @@ export const getAllUsers=catchAsyncError(async(req:Request,res:Response,next:Nex
         return next(new ErrorHandler(error.message,400));
     }
 })
+
+//update user role
+
+export const updateUserRole=catchAsyncError(async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const {id,role}=req.body;
+        updateUserRoleService(id,role,res);
+    }catch(error:any){
+        return next(new ErrorHandler(error.message,400));
+    }
+});
+
+//delete user
+
+export const deleteUser=catchAsyncError(async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const {id}=req.body;        
+        const user= await userModel.findById(id);
+        if(!user) {
+            return next(new ErrorHandler("User not found",400));
+        }
+
+        await user.deleteOne({_id:id});  
+        await redis.del(id);
+
+        res.status(200).json({
+            success:true,
+            message:"User deleted successfully"
+        })
+    }
+    catch(error:any){
+        return next(new ErrorHandler(error.message,400));
+    }
+});
+

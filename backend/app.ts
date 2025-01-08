@@ -9,6 +9,7 @@ import courseRouter from "./routes/courseRoute";
 import orderRouter from "./routes/orderRoutes";
 import notificationRouter from "./routes/notificationRoutes";
 import analyticsRouter from "./routes/analyticsRoute";
+import LayoutRouter from "./routes/LayoutRoute";
 
 app.use(express.json({ limit: "100mb" }));
 
@@ -17,7 +18,7 @@ app.use(cookieParser());
 app.use(cors({ origin: process.env.ORIGIN }));
 
 //routes
-app.use("/api/v1", userRouter,courseRouter,orderRouter,notificationRouter,analyticsRouter);
+app.use("/api/v1", userRouter,courseRouter,orderRouter,notificationRouter,analyticsRouter,LayoutRouter);
 
 //testing api
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {

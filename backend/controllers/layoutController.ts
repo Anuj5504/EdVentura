@@ -3,7 +3,7 @@ import ErrorHandler from "../utils/ErrorHandler";
 import { catchAsyncError } from "../middleware/catchAsyncError";
 import LayoutModel from "../models/layoutModel";
 import cloudinary from "cloudinary";
-
+    
 export const createLayout=catchAsyncError(async(req:Request,res:Response,next:NextFunction)=>{
     try {
         const {type}=req.body;

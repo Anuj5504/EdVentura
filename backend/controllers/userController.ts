@@ -182,7 +182,7 @@ export const updateAccessToken = catchAsyncError(async (req: Request, res: Respo
         const session = await redis.get(decode.id as string);
 
         if (!session) {
-            return next(new ErrorHandler("Could not refresh token", 400));
+            return next(new ErrorHandler("Please Login Again", 400));
         }
 
         const user = JSON.parse(session);
@@ -193,7 +193,7 @@ export const updateAccessToken = catchAsyncError(async (req: Request, res: Respo
         req.user = user;
         res.cookie("access_token", accessToken, accessTokenOptions);
         res.cookie("refresh_token", refreshToken, refreshTokenOptions)
-
+        await redis.set(user._id,JSON.stringify(user),"EX",604800);//expires in 7 days
         res.status(200).json({
             status: "success",
             accessToken,

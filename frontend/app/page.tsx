@@ -2,6 +2,7 @@
 import React,{useState} from "react";
 import Heading from "./utils/Heading";
 import Header from "./components/Header";
+import Hero from "./components/Hero";
 interface Props{
 
 }
@@ -22,6 +23,8 @@ const Page=(props:Props)=>{
       setOpen={setopen}
       activeItem={activeItem}
       />
+
+      <Hero/>
     </div>
   )
 };

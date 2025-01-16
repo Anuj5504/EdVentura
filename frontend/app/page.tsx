@@ -9,7 +9,7 @@ interface Props{
 
 const Page=(props:Props)=>{
   const [open, setopen] = useState(false);
-  const [activeItem, setactiveItem] = useState(0)
+  const [activeItem, setactiveItem] = useState(0) 
   return(
     <div>
       <Heading 

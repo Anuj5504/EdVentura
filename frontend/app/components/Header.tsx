@@ -11,7 +11,6 @@ type Props = {
     activeItem: number,
 }
 
-
 const Header = ({ activeItem, setOpen }: Props) => {
     const [active, setactive] = useState(false)
     const [openSlidebar, setopenSlidebar] = useState(false)

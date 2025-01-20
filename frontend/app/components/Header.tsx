@@ -5,13 +5,19 @@ import NavItems from '../utils/NavItems'
 import { ThemeSwitcher } from '../utils/ThemeSwitcher'
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from 'react-icons/hi'
 
+import Login from './auth/Login'
+import CustomModal from '../utils/CustomModal'
+import Signup from './auth/Signup'
+
 type Props = {
     open: boolean,
     setOpen: (open: boolean) => void,
     activeItem: number,
+    route: string,
+    setRoute?: (route: string) => void,
 }
 
-const Header = ({ activeItem, setOpen }: Props) => {
+const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
     const [active, setactive] = useState(false)
     const [openSlidebar, setopenSlidebar] = useState(false)
 
@@ -85,13 +91,48 @@ const Header = ({ activeItem, setOpen }: Props) => {
                                     size={25}
                                     onClick={() => setOpen(true)}
                                 />
-                                
+
                                 <p className='text-[14px] px-2 pl-5 text-black dark:text-white'>Copyright @ 2025 EdVentura</p>
                             </div>
                         </div>
                     )
                 }
             </div>
+            {
+                route === "Login" && (
+                    <>
+                        {
+                            open && (
+                                <CustomModal
+                                    open={open}
+                                    setOpen={setOpen}
+                                    setRoute={setRoute}
+                                    activeItem={activeItem}
+                                    component={Login}
+                                />
+                            )
+                        }
+                    </>
+                )
+            }
+
+            {
+                route === "Sign-Up" && (
+                    <>
+                        {
+                            open && (
+                                <CustomModal
+                                    open={open}
+                                    setOpen={setOpen}
+                                    setRoute={setRoute}
+                                    activeItem={activeItem}
+                                    component={Signup}
+                                />
+                            )
+                        }
+                    </>
+                )
+            }
         </div>
     )
 }

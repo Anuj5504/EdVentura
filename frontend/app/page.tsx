@@ -3,13 +3,15 @@ import React,{useState} from "react";
 import Heading from "./utils/Heading";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-interface Props{
 
+interface Props{
 }
 
 const Page=(props:Props)=>{
   const [open, setopen] = useState(false);
   const [activeItem, setactiveItem] = useState(0) 
+  const [route, setroute] = useState("Login")
+
   return(
     <div>
       <Heading 
@@ -22,6 +24,8 @@ const Page=(props:Props)=>{
       open={open}
       setOpen={setopen}
       activeItem={activeItem}
+      setRoute={setroute}
+      route={route}
       />
 
       <Hero/>

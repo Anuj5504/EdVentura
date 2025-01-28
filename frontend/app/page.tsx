@@ -16,10 +16,9 @@ const Page=(props:Props)=>{
     <div>
       <Heading 
       title="EdVentura"
-      description="Learning Platform for students"
+      description="Learning Platform for student  s"
       keywords="Redux,Programming"
       />
-
       <Header
       open={open}
       setOpen={setopen}

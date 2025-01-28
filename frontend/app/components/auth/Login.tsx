@@ -14,7 +14,7 @@ const schema = Yup.object().shape({
     password: Yup.string().required("Please enter your Password").min(6),
 })
 
-const Login: React.FC<Props> = ({setRoute}) => {
+const Login: React.FC<Props> = ({ setRoute }) => {
     const [show, setshow] = useState(false)
     const formik = useFormik({
         initialValues: { email: "", password: "" },

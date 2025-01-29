@@ -146,7 +146,7 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
                                     className="hidden 800px:flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all group"
                                 >
                                     <HiOutlineUserCircle
-                                        size={22}
+                                        size={22}   
                                         className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
                                     />
                                     <span className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">

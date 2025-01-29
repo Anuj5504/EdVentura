@@ -9,7 +9,7 @@ const Hero = (props: Props) => {
   const popularSearches = ['Web Development', 'Mobile Apps', 'UI/UX Design', 'Data Science'];
 
   return (
-    <div className="min-h-screen">
+    <div className="w-full 1000px:flex items-center" >
       <div className="flex flex-col lg:flex-row justify-center items-center h-auto lg:h-[80vh] gap-10 lg:gap-36 px-5 max-w-7xl mx-auto">
         {/* Left Section */}
         <div className="flex flex-col gap-8 text-center lg:text-left items-center lg:items-start p-8 lg:p-16">

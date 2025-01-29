@@ -1,8 +1,11 @@
+'use client'
 import type { Metadata } from "next";
 import { Poppins, Josefin_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./utils/theme-provider";
 import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -22,15 +25,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    
+
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${poppins.variable} ${josefinSans.variable} !bg-white bg-no-repeat dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300`}
+        className={`${poppins.variable} ${josefinSans.variable}  !bg-white bg-no-repeat dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300`}
       >
-        <ThemeProvider attribute='class' defaultTheme="system" enableSystem>
-          {children}
-          <Toaster position="top-center" reverseOrder={false}/>
-        </ThemeProvider>
+        <Provider store={store}>
+          <ThemeProvider attribute='class' defaultTheme="system" enableSystem>
+            {children}
+            <Toaster position="top-center" reverseOrder={false} />
+          </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );

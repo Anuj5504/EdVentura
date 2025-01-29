@@ -17,7 +17,7 @@ const CustomModal: React.FC<Props> = ({ open, setOpen, setRoute, component: Comp
     aria-describedby='modal-modal-description'
     >
         <Box
-        className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[350px] p-6 md-[450px] border-none bg-white dark:bg-slate-900 rounded-[8px]"
+        className="overflow-hidden absolute top-[20%] left-[50%] -translate-x-1/2 w-[450px] p-6 md-[450px] border-none  bg-white dark:bg-slate-900 rounded-[8px]"
         >
             <Component setOpen={setOpen} setRoute={setRoute}/>
         </Box>

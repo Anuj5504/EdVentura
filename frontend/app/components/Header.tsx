@@ -9,6 +9,8 @@ import Login from './auth/Login'
 import CustomModal from '../utils/CustomModal'
 import Signup from './auth/Signup'
 import Verification from './auth/Verification'
+import { useSelector } from 'react-redux'
+import Image from 'next/image'
 
 type Props = {
     open: boolean,
@@ -22,7 +24,8 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
     const [active, setactive] = useState(false)
     const [openSlidebar, setopenSlidebar] = useState(false)
     const [isSearchOpen, setIsSearchOpen] = useState(false)
-    const [searchQuery, setSearchQuery] = useState('')
+    const [searchQuery, setSearchQuery] = useState('');
+    const { user } = useSelector((state: any) => state.auth);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -52,6 +55,7 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
         console.log('Searching for:', searchQuery)
     }
 
+    console.log(user);
     return (
         <div className='w-full relative'>
             <div className={`${active ? "dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black fixed top-0 w-full h-[80px] z-[80] border-b dark:border-b dark:border-[#ffffff1c] shadow-xl transition duration-500" : "w-full border-b dark:border-[#ffffff1c] h-[80px] z-[80] dark:shadow"}`}>
@@ -119,7 +123,7 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
                                 activeItem={activeItem}
                                 isMobile={false}
                             />
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center ">
                                 <ThemeSwitcher />
 
                                 <button
@@ -141,18 +145,42 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
                                     </button>
                                 </div>
 
-                                <button
+                               <button
                                     onClick={() => setOpen(true)}
                                     className="hidden 800px:flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all group"
                                 >
-                                    <HiOutlineUserCircle
-                                        size={22}   
-                                        className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
-                                    />
-                                    <span className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">
-                                        Sign In
-                                    </span>
+
+                                        {user?(
+                                        <div className='800px:flex items-center gap-2'>
+                                            {user.avatar? (
+                                                <Image
+                                                src={user.avatar}
+                                                alt=''
+                                                />
+                                            ):(
+                                                <HiOutlineUserCircle
+                                                size={22}
+                                                className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
+                                            />
+                                            )}
+                                        <span className=" flex justify-center text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">
+                                           {user.name}
+                                        </span>
+                                    </div>
+                                    ):(
+                                        <div  className='800px:flex items-center gap-2'>
+                                        <HiOutlineUserCircle
+                                            size={22}
+                                            className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
+                                        />
+                                        <span className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">
+                                            Sign In
+                                        </span>
+                                    </div>
+                                    )}
                                 </button>
+
+                                
                             </div>
                         </div>
                     </div>
@@ -165,13 +193,19 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
                             onClick={handleClose}
                             id="screen"
                         >
-                            <div className='absolute w-[70%] z-[999999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0 shadow-xl'>
+                            <div className=' absolute w-[70%] z-[999999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0 shadow-xl'>
                                 <NavItems activeItem={activeItem} isMobile={true} />
-                                <HiOutlineUserCircle
-                                    className="cursor-pointer ml-5 my-2 text-black dark:text-white hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-                                    size={25}
-                                    onClick={() => setOpen(true)}
-                                />
+                                <div className="flex items-center">
+
+                                    <HiOutlineUserCircle
+                                        className="cursor-pointer ml-5 my-2 text-black dark:text-white hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+                                        size={25}
+                                        onClick={() => setOpen(true)}
+                                    />
+                                    <span className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">
+                                        {user.name}
+                                    </span>
+                                </div>
                                 <p className='text-[14px] px-2 pl-5 text-black dark:text-white opacity-80'>Copyright @ 2025 EdVentura</p>
                             </div>
                         </div>

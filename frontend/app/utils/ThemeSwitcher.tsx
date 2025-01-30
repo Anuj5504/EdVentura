@@ -15,7 +15,7 @@ export const ThemeSwitcher = () => {
     if (!mounted) return null;
 
     return (
-        <div className='flex items-center justify-center mx-4'>
+        <div className='flex items-center justify-center mr-4'>
             {
                 theme==="light"?(
                     <BiMoon

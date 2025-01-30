@@ -9,12 +9,13 @@ const Hero = (props: Props) => {
   const popularSearches = ['Web Development', 'Mobile Apps', 'UI/UX Design', 'Data Science'];
 
   return (
-    <div className="w-full 1000px:flex items-center" >
-      <div className="flex flex-col lg:flex-row justify-center items-center h-auto lg:h-[80vh] gap-10 lg:gap-36 px-5 max-w-7xl mx-auto">
+    <div className="w-full min-h-screen flex flex-col lg:flex-row justify-center items-center pt-20 lg:pt-0 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center gap-10 lg:gap-36 px-5 max-w-7xl mx-auto">
+        
         {/* Left Section */}
         <div className="flex flex-col gap-8 text-center lg:text-left items-center lg:items-start p-8 lg:p-16">
           {/* Status Badge */}
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-black/80 backdrop-blur-sm">
+          <div className="mb-4 flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-black/80 backdrop-blur-sm">
             <span className="animate-pulse text-green-500">●</span>
             <span className="text-gray-600 dark:text-gray-300">2000+ Students Learning Now</span>
           </div>
@@ -80,33 +81,7 @@ const Hero = (props: Props) => {
           </div>
         </div>
 
-        {/* Right Section */}
-        <div className="w-full lg:w-[45vw] flex justify-center relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-violet-500/10 blur-3xl rounded-full"></div>
-          <div className="relative">
-            <div className="absolute -top-20 -left-20 p-6 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                <span className="text-sm text-gray-600 dark:text-gray-400">Live Classes</span>
-              </div>
-            </div>
-            <Image
-              src={require("../../public/images/image.png")}
-              alt="Learning Platform Illustration"
-              width={600}
-              height={600}
-              priority
-              loading="eager"
-              className="relative z-10 drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute -bottom-24 -right-10 p-6 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-xl">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">🎯</span>
-                <span className="text-sm text-gray-600 dark:text-gray-400">98% Success Rate</span>
-              </div>
-            </div>
-          </div>
-        </div>
+       
       </div>
 
       {/* Horizontal Line */}

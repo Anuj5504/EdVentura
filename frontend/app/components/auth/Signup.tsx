@@ -25,7 +25,6 @@ const Signup: React.FC<Props> = ({ setRoute }) => {
         if(isSuccess) {
             const message=data.message || "Registration Successfull";
             toast.success(message);
-
             setRoute("Verification");
         }
         if(error) {
@@ -44,7 +43,6 @@ const Signup: React.FC<Props> = ({ setRoute }) => {
                 name,email,password
             };
             await register(data);
-
         }
     })
 

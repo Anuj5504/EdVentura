@@ -6,6 +6,7 @@ import { ThemeProvider } from "./utils/theme-provider";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
+import { SessionProvider } from "next-auth/react";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -31,10 +32,13 @@ export default function RootLayout({
         className={`${poppins.variable} ${josefinSans.variable}  !bg-white bg-no-repeat dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300`}
       >
         <Provider store={store}>
-          <ThemeProvider attribute='class' defaultTheme="system" enableSystem>
-            {children}
-            <Toaster position="top-center" reverseOrder={false} />
-          </ThemeProvider>
+          <SessionProvider>
+
+            <ThemeProvider attribute='class' defaultTheme="system" enableSystem>
+              {children}
+              <Toaster position="top-center" reverseOrder={false} />
+            </ThemeProvider>
+          </SessionProvider>
         </Provider>
       </body>
     </html>

@@ -11,6 +11,9 @@ import Signup from './auth/Signup'
 import Verification from './auth/Verification'
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
+import { useSocialAuthMutation } from '@/redux/features/auth/authApi'
+import toast from 'react-hot-toast'
 
 type Props = {
     open: boolean,
@@ -26,6 +29,22 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState('');
     const { user } = useSelector((state: any) => state.auth);
+    const {data}=useSession();
+    const [socialAuth,{isSuccess,error}]=useSocialAuthMutation();
+
+    useEffect(() => {
+        if(!user) {
+            if(data) {
+                 socialAuth({email:data.user?.email,name:data.user?.name,avatar:data.user?.image})
+            }
+        }
+
+        if(isSuccess) {
+            toast.success("Login Successfull");
+        }
+    }, [data,user])
+    
+
 
     useEffect(() => {
         const handleScroll = () => {

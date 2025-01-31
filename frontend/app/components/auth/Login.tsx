@@ -6,7 +6,9 @@ import { styles } from '@/app/styles/style'
 import { FcGoogle } from "react-icons/fc";
 import { useLoginMutation } from '@/redux/features/auth/authApi'
 import toast from 'react-hot-toast'
+import { signIn } from 'next-auth/react';
 
+const REDIRECT_URL_AFTER_SIGN_IN = '/'; // Define your redirect URL here
 type Props = {
     setRoute: (route: string) => void
     setOpen: (route: boolean) => void
@@ -17,33 +19,33 @@ const schema = Yup.object().shape({
     password: Yup.string().required("Please enter your Password").min(6),
 })
 
-const Login: React.FC<Props> = ({ setRoute,setOpen }) => {
+const Login: React.FC<Props> = ({ setRoute, setOpen }) => {
     const [show, setshow] = useState(false);
-    const [login,{isLoading,isSuccess,data,error}]=useLoginMutation();
+    const [login, { isLoading, isSuccess, data, error }] = useLoginMutation();
 
     const formik = useFormik({
         initialValues: { email: "", password: "" },
         validationSchema: schema,
         onSubmit: async ({ email, password }) => {
-            await login({email,password});
+            await login({ email, password });
         }
     });
 
     useEffect(() => {
-        if(isSuccess) {
+        if (isSuccess) {
             toast.success("Login Successfully");
             setOpen(false);
             console.log(data);
         }
-        
-        if(error) {
-            if("data" in error) {
-                const errorData=error as any;
+
+        if (error) {
+            if ("data" in error) {
+                const errorData = error as any;
                 toast.error(errorData.data.message);
             }
         }
-    }, [isSuccess,error])
-    
+    }, [isSuccess, error])
+
     const { errors, touched, values, handleChange, handleSubmit } = formik
 
     return (
@@ -117,9 +119,16 @@ const Login: React.FC<Props> = ({ setRoute,setOpen }) => {
 
                 <h5 className='text-center pt-4 font-Poppins text-[14px] text-black dark:text-white'>Or join with</h5>
                 <div className='flex items-center justify-center my-3'>
-                    <FcGoogle size={30} className="cursor-pointer ml-2" />
+                    <FcGoogle size={30} className="cursor-pointer ml-2"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            signIn("google", { callbackUrl: REDIRECT_URL_AFTER_SIGN_IN });
+                        }}
+                    />
 
-                    <AiFillGithub size={30} className='cursor-pointer ml-2' />
+                    <AiFillGithub size={30} className='cursor-pointer ml-2'
+                        onClick={() => signIn("github")}
+                    />
                 </div>
 
                 <h5 className='text-center pt-4 font-Poppins text-[14px]'>

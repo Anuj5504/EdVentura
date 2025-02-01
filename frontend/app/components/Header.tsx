@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import NavItems from '../utils/NavItems'
 import { ThemeSwitcher } from '../utils/ThemeSwitcher'
 import { HiOutlineMenuAlt3, HiOutlineUserCircle, HiSearch, HiX } from 'react-icons/hi'
-
 import Login from './auth/Login'
 import CustomModal from '../utils/CustomModal'
 import Signup from './auth/Signup'
@@ -14,6 +13,7 @@ import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { useSocialAuthMutation } from '@/redux/features/auth/authApi'
 import toast from 'react-hot-toast'
+import UserMenu from './UserMenu/UserMenu'
 
 type Props = {
     open: boolean,
@@ -21,6 +21,7 @@ type Props = {
     activeItem: number,
     route: string,
     setRoute?: (route: string) => void,
+
 }
 
 const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
@@ -29,21 +30,22 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState('');
     const { user } = useSelector((state: any) => state.auth);
-    const {data}=useSession();
-    const [socialAuth,{isSuccess,error}]=useSocialAuthMutation();
+    const { data } = useSession();
+    const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+    const [UserMenuOpen, setUserMenuOpen] = useState(false)
 
     useEffect(() => {
-        if(!user) {
-            if(data) {
-                 socialAuth({email:data.user?.email,name:data.user?.name,avatar:data.user?.image})
+        if (!user) {
+            if (data) {
+                socialAuth({ email: data.user?.email, name: data.user?.name, avatar: data.user?.image })
             }
         }
 
-        if(isSuccess) {
+        if (isSuccess) {
             toast.success("Login Successfull");
         }
-    }, [data,user])
-    
+    }, [data, user])
+
 
 
     useEffect(() => {
@@ -67,14 +69,14 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
             setopenSlidebar(false)
         }
     }
-
+    console.log(user)
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
         // Add your search logic here
         console.log('Searching for:', searchQuery)
     }
 
-    console.log(user);
+
     return (
         <div className='w-full relative'>
             <div className={`${active ? "dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black fixed top-0 w-full h-[80px] z-[80] border-b dark:border-b dark:border-[#ffffff1c] shadow-xl transition duration-500" : "w-full border-b dark:border-[#ffffff1c] h-[80px] z-[80] dark:shadow"}`}>
@@ -164,42 +166,47 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
                                     </button>
                                 </div>
 
-                               <button
-                                    onClick={() => setOpen(true)}
+                                <button
+                                    onClick={() => { user ? setUserMenuOpen(true) : setOpen(true) }}
                                     className="hidden 800px:flex items-center gap-2 px-4 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all group"
                                 >
 
-                                        {user?(
+                                    {user ? (
                                         <div className='800px:flex items-center gap-2'>
-                                            {user.avatar? (
+                                            {user.avatar ? (
+
                                                 <Image
-                                                src={user.avatar}
-                                                alt=''
+                                                    className="w-7 h-7 rounded-full"
+                                                    src={user.avatar.url}
+                                                    alt="User Avatar"
+                                                    width={28}  // Required
+                                                    height={28} // Required
                                                 />
-                                            ):(
+
+                                            ) : (
                                                 <HiOutlineUserCircle
+                                                    size={22}
+                                                    className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
+                                                />
+                                            )}
+                                            <span className=" flex justify-center text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">
+                                                {user.name}
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <div className='800px:flex items-center gap-2'>
+                                            <HiOutlineUserCircle
                                                 size={22}
                                                 className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
                                             />
-                                            )}
-                                        <span className=" flex justify-center text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">
-                                           {user.name}
-                                        </span>
-                                    </div>
-                                    ):(
-                                        <div  className='800px:flex items-center gap-2'>
-                                        <HiOutlineUserCircle
-                                            size={22}
-                                            className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
-                                        />
-                                        <span className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">
-                                            Sign In
-                                        </span>
-                                    </div>
+                                            <span className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">
+                                                Sign In
+                                            </span>
+                                        </div>
                                     )}
                                 </button>
 
-                                
+
                             </div>
                         </div>
                     </div>
@@ -304,6 +311,18 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
                         </button>
                     </form>
                 </div>
+            )}
+
+            {UserMenuOpen && (
+                <> 
+                    <div
+                        className="fixed inset-0 z-30"
+                        onClick={() => setUserMenuOpen(false)}
+                    />
+                    <div className="relative z-40">
+                        <UserMenu />
+                    </div>
+                </>
             )}
         </div>
     )

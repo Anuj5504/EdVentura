@@ -33,7 +33,6 @@ const Login: React.FC<Props> = ({ setRoute, setOpen }) => {
 
     useEffect(() => {
         if (isSuccess) {
-            toast.success("Login Successfully");
             setOpen(false);
             console.log(data);
         }

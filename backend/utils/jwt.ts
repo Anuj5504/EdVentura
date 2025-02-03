@@ -42,7 +42,6 @@ export const sendToken =  async (user: IUser, statusCode: number, res: Response)
     // Set cookies in the response
     res.cookie('access_token', accessToken, accessTokenOptions);
     res.cookie('refresh_token', refreshToken, refreshTokenOptions);
-    console.log(accessToken)
     // Send response
     res.status(statusCode).json({
         success: true,

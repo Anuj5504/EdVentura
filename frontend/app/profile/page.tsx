@@ -18,7 +18,7 @@ const page:React.FC<Props> = (props: Props) => {
         <div>
             <Protected>
                 <Heading
-                    title={user.name}
+                    title={user?.name}
                     description="Learning Platform for student  s"
                     keywords="Redux,Programming"
                 />

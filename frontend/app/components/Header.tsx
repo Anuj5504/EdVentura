@@ -10,8 +10,8 @@ import Signup from './auth/Signup'
 import Verification from './auth/Verification'
 import { useSelector } from 'react-redux'
 import Image from 'next/image'
-import { useSession } from 'next-auth/react'
-import { useSocialAuthMutation } from '@/redux/features/auth/authApi'
+import { signOut, useSession } from 'next-auth/react'
+import { useLogOutQuery, useSocialAuthMutation } from '@/redux/features/auth/authApi'
 import toast from 'react-hot-toast'
 import UserMenu from './UserMenu/UserMenu'
 
@@ -33,6 +33,10 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
     const { data } = useSession();
     const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
     const [UserMenuOpen, setUserMenuOpen] = useState(false)
+    const [logout, setlogout] = useState(false);
+    const { } = useLogOutQuery(undefined, {
+        skip: !logout ? true : false,
+    });
 
     useEffect(() => {
         if (!user) {
@@ -41,8 +45,14 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
             }
         }
 
-        if (isSuccess) {
-            toast.success("Login Successfull");
+        if(data===null ) {
+            if(isSuccess) {
+                toast.success("Login successfully")
+            }
+        } 
+
+        if (data === null) {
+            setlogout(true);
         }
     }, [data, user])
 
@@ -69,7 +79,7 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
             setopenSlidebar(false)
         }
     }
-    console.log(user)
+
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
         // Add your search logic here
@@ -314,7 +324,7 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
             )}
 
             {UserMenuOpen && (
-                <> 
+                <>
                     <div
                         className="fixed inset-0 z-30"
                         onClick={() => setUserMenuOpen(false)}

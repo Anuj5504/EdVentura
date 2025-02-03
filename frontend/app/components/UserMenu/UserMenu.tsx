@@ -1,13 +1,29 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { BookOpen, Settings, LogOut, User, Crown, Bell } from "lucide-react";
 import Link from "next/link";
-
+import { useLogOutQuery } from "@/redux/features/auth/authApi";
+import { signOut } from "next-auth/react";
+import { redirect, useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 type UserMenuProps = {};
 
 const UserMenu: React.FC<UserMenuProps> = () => {
+  const [logout, setlogout] = useState(false);
+  const { user } = useSelector((state: any) => state.auth);
+
+  const {} = useLogOutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
+
+  const handleLogOut = async () => {
+    setlogout(true);
+    await signOut();
+  }
+  
   return (
+    
     <div className="absolute top-[10px] right-28 max-w-xs w-72 bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800">
       {/* User Profile Section */}
       <div className="p-5 border-b border-gray-200 dark:border-gray-800">
@@ -24,7 +40,7 @@ const UserMenu: React.FC<UserMenuProps> = () => {
           </div>
           <div>
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Anuj Jadhav
+              {user?.name}
             </h2>
             <div className="flex items-center gap-1">
               <Crown className="w-4 h-4 text-yellow-500" />
@@ -73,13 +89,13 @@ const UserMenu: React.FC<UserMenuProps> = () => {
           <span className="text-gray-700 dark:text-gray-300">Settings</span>
         </Link>
 
-        <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-red-600">
+        <button onClick={()=>handleLogOut()} className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-red-600">
           <LogOut className="w-5 h-5" />
           <span>Sign Out</span>
         </button>
       </div>
     </div>
-  );
+  );  
 };
 
 export default UserMenu;

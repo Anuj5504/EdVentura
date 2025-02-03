@@ -12,35 +12,35 @@ type Props = {
 }
 
 const schema = Yup.object().shape({
-    name:Yup.string().required("Please Enter your name"),
+    name: Yup.string().required("Please Enter your name"),
     email: Yup.string().email("Invalid Email").required("Please enter your email"),
     password: Yup.string().required("Please enter your Password").min(6),
 })
 
 const Signup: React.FC<Props> = ({ setRoute }) => {
     const [show, setshow] = useState(false)
-    const [register,{error,isSuccess,data,isLoading}]=useRegisterMutation();
+    const [register, { error, isSuccess, data, isLoading }] = useRegisterMutation();
 
     useEffect(() => {
-        if(isSuccess) {
-            const message=data.message || "Registration Successfull";
+        if (isSuccess) {
+            const message = data.message || "Registration Successfull";
             toast.success(message);
             setRoute("Verification");
         }
-        if(error) {
-            if("data" in error) {
-                const errorData=error as any;
+        if (error) {
+            if ("data" in error) {
+                const errorData = error as any;
                 toast.error(errorData.data.message);
             }
         }
-    }, [isSuccess,error])
-    
+    }, [isSuccess, error])
+
     const formik = useFormik({
-        initialValues: { name:"",email: "", password: "" },
+        initialValues: { name: "", email: "", password: "" },
         validationSchema: schema,
-        onSubmit: async ({name, email, password }) => {
-            const data={
-                name,email,password
+        onSubmit: async ({ name, email, password }) => {
+            const data = {
+                name, email, password
             };
             await register(data);
         }
@@ -55,25 +55,25 @@ const Signup: React.FC<Props> = ({ setRoute }) => {
             </h1>
             <form onSubmit={handleSubmit}>
                 <div className='pb-4'>
-                <label
-                    className={`${styles.label}`}
-                    htmlFor="name"> Enter your name
-                </label>
-                <input
-                    type="text"
-                    name=''
-                    value={values.name}
-                    onChange={handleChange}
-                    id="name"
-                    placeholder='Username'
-                    className={`${errors.name && touched.name && "border-red-500 "} ${styles.input}`}
-                />
+                    <label
+                        className={`${styles.label}`}
+                        htmlFor="name"> Enter your name
+                    </label>
+                    <input
+                        type="text"
+                        name=''
+                        value={values.name}
+                        onChange={handleChange}
+                        id="name"
+                        placeholder='Username'
+                        className={`${errors.name && touched.name && "border-red-500 "} ${styles.input}`}
+                    />
 
-                {
-                    errors.name && touched.name && (
-                        <span className='text-red-500 pt-2 block'>{errors.name}</span>
-                    )
-                }
+                    {
+                        errors.name && touched.name && (
+                            <span className='text-red-500 pt-2 block'>{errors.name}</span>
+                        )
+                    }
                 </div>
                 <label
                     className={`${styles.label}`}

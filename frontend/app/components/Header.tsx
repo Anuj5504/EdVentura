@@ -41,19 +41,19 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
     useEffect(() => {
         if (!user) {
             if (data) {
-                socialAuth({ email: data.user?.email, name: data.user?.name, avatar: data.user?.image })
-            }
-        }
-
-        if(data===null ) {
-            if(isSuccess) {
+                socialAuth({ email: data.user?.email, name: data.user?.name, avatar: data.user?.image });
                 toast.success("Login successfully")
             }
-        } 
-
-        if (data === null) {
-            setlogout(true);
         }
+
+        // if(data===null ) {
+        //     if(isSuccess) {
+        //         toast.success("Logged Outlly")
+        //     }
+        // } 
+        // if ( data === null) {
+        //     setlogout(true);
+        // }
     }, [data, user])
 
 

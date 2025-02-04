@@ -18,6 +18,11 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
+html, body {
+  overflow: auto;
+}
+
+
 @keyframes changeBackgroundColor {
   0%, 100% {
     opacity: 1;

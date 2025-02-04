@@ -14,10 +14,14 @@ export const store=configureStore({
 
 //call refresh token function
 
-const initializeApp=async()=>{
-    await store.dispatch(apiSlice.endpoints.refreshToken.initiate({},{forceRefetch:true}));
-    await store.dispatch(apiSlice.endpoints.loadUser.initiate({},{forceRefetch:true}));
-}
+const initializeApp = async () => {
+    const cookies = document.cookie; // Read cookies
+    if (!cookies.includes("access_token")) {  // Check if token exists
+        await store.dispatch(apiSlice.endpoints.refreshToken.initiate({}, { forceRefetch: true }));
+        await store.dispatch(apiSlice.endpoints.loadUser.initiate({}, { forceRefetch: true }));
+    }
+};
+
 
 initializeApp();
 

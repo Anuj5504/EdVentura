@@ -31,10 +31,11 @@ const Login: React.FC<Props> = ({ setRoute, setOpen }) => {
         }
     });
 
+    console.log(data);
     useEffect(() => {
         if (isSuccess) {
             setOpen(false);
-            console.log(data);
+            console.log("Login Success:", data);
         }
 
         if (error) {

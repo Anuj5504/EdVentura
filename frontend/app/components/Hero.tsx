@@ -11,7 +11,7 @@ const Hero = (props: Props) => {
   return (
     <div className="w-full min-h-screen flex flex-col lg:flex-row justify-center items-center pt-20 lg:pt-0 overflow-hidden">
       <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center gap-10 lg:gap-36 px-5 max-w-7xl mx-auto">
-        
+
         {/* Left Section */}
         <div className="flex flex-col gap-8 text-center lg:text-left items-center lg:items-start p-8 lg:p-16">
           {/* Status Badge */}
@@ -81,7 +81,7 @@ const Hero = (props: Props) => {
           </div>
         </div>
 
-       
+
       </div>
 
       {/* Horizontal Line */}

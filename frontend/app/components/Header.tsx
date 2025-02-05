@@ -199,9 +199,6 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
                                                     className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
                                                 />
                                             )}
-                                            <span className=" flex justify-center text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors">
-                                                {user.name}
-                                            </span>
                                         </div>
                                     ) : (
                                         <div className='800px:flex items-center gap-2'>

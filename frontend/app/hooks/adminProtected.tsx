@@ -10,18 +10,19 @@ interface ProtectedProps {
 }
 
 export default function AdminProtected({ children }: ProtectedProps) {
-    const router = useRouter();
-    const {user}=useSelector((state:any)=>state.auth);
-
-    const isAdmin=user?.role==="admin";
-
+  const router = useRouter();
+  const { user } = useSelector((state: any) => state.auth);
+  if (user) {
+    const isAdmin = user?.role === "admin";
     useEffect(() => {
-        if (!isAdmin) { 
-          redirect("/");
-        }
-      }, [isAdmin, router]);
-    
-      if (isAdmin === null) return null;
-    
-      return isAdmin ? children : null;
+      if (!isAdmin) {
+        redirect("/");
+      }
+    }, [isAdmin, router]);
+
+    if (isAdmin === null) return null;
+
+    return isAdmin ? children : null;
+  }
+
 }

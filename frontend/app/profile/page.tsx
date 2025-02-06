@@ -19,7 +19,7 @@ const page:React.FC<Props> = (props: Props) => {
             <Protected>
                 <Heading
                     title={user?.name}
-                    description="Learning Platform for student  s"
+                    description="Learning Platform for students"
                     keywords="Redux,Programming"
                 />
                 <Header

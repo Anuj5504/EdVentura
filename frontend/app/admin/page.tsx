@@ -13,7 +13,7 @@ const page = (props: Props) => {
 
                 <Heading title="EdVentura" description="Learning Platform for students" keywords="Redux,Programming" />
                 
-                <div className='flex h-[200vh]'>
+                <div className='flex max-h-full'>
                     <div className="1500px:w-[16%] w-1/5">
                         <AdminSidebar />
                     </div>

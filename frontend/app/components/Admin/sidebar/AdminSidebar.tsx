@@ -52,7 +52,7 @@ const sections = [
   },
 ];
 
-export default function Sidebar() {
+export default function AdminSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const { user } = useSelector((state: any) => state.auth);
   return (
@@ -69,7 +69,7 @@ export default function Sidebar() {
           )}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="p-1 rounded-md text-white hover:bg-gray-700 flex justify-center items-center"
+            className="p-1 rounded-md text-gray-500 hover:text-white flex justify-center items-center"
           >
             {collapsed ? (
               <span className="material-symbols-outlined">arrow_forward_ios</span>
@@ -81,22 +81,21 @@ export default function Sidebar() {
 
         <div className="flex flex-col items-center my-6">
           <div className='800px:flex items-center gap-2'>
-            {user.avatar ? (
-
+            {user && (user.avatar || user.avatar?.url) ? (
               <Image
                 className="w-12 h-12 rounded-full"
-                src={user.avatar.url}
+                src={user.avatar?.url || user.avatar}
                 alt="User Avatar"
                 width={28}  // Required
                 height={28} // Required
               />
-
             ) : (
               <HiOutlineUserCircle
                 size={22}
                 className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
               />
             )}
+
           </div>
           {!collapsed && (
             <>
@@ -107,7 +106,7 @@ export default function Sidebar() {
         </div>
 
         <ul className="space-y-2">
-          <li className="cursor-pointer flex items-center p-2 rounded-md hover:bg-blue-600 transition-transform duration-300 transform hover:scale-105">
+          <li className="cursor-pointer flex items-center p-2 rounded-md hover:bg-green-500 transition-transform duration-300 transform hover:scale-105">
             <Home className="w-6 h-6" />
             {!collapsed && <span className="ml-3">Dashboard</span>}
           </li>

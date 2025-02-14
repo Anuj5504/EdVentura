@@ -82,7 +82,6 @@ const Header = ({ activeItem, setOpen, route, open, setRoute }: Props) => {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
-        // Add your search logic here
         console.log('Searching for:', searchQuery)
     }
 

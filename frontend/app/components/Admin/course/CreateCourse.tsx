@@ -1,19 +1,63 @@
 import React, { useState } from "react";
 import CourseOptions from "./CourseOptions";
+import CourseInformations from "./CourseInformations";
+import CourseData from "./CourseData";
 
 const CreateCourse = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [active, setActive] = useState(0);
+  const [courseInfo, setCourseInfo] = useState({
+    name: "",
+    description: "",
+    price: "",
+    estimatedPrice: "",
+    tags: "",
+    level: "",
+    demoUrl: "",
+    thumbnail: "",
+  });
+
+  const [benefits, setBenefits] = useState([{ title: "" }]);
+  const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
+  const [courseData, setcourseData] = useState([
+    {
+      videoUrl: "",
+      title: "",
+      description: "",
+      videoSection: "Untitled Section",
+      links: [
+        {
+          title: "",
+          url: "",
+        },
+      ],
+      suggestion: "",
+    },
+  ]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center pt-10">
-      <CourseOptions currentStep={currentStep} />
-      <div className="mt-6">
-        <button
-          onClick={() => setCurrentStep((prev) => Math.min(prev + 1, 3))}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
-        >
-          Next Step
-        </button>
+    <div className="w-full flex flex-col lg:flex-row min-h-screen max-w-screen-xl mx-auto">
+
+      <div className="w-full lg:w-[80%] p-4">
+        {active === 0 &&
+          <CourseInformations
+            courseInfo={courseInfo}
+            setCourseInfo={setCourseInfo}
+            active={active}
+            setActive={setActive}
+          />}
+        {active === 1 &&
+          <CourseData
+          benefits={benefits}
+          setBenefits={setBenefits}
+          prerequisites={prerequisites}
+          setPrerequisits={setPrerequisites}
+          active={active}
+          setActive={setActive}
+          />}
+      </div>
+
+      <div className="w-full lg:w-[23%] lg:fixed top-[100px] right-4 p-4">
+        <CourseOptions active={active} setActive={setActive} />
       </div>
     </div>
   );

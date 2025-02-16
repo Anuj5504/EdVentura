@@ -1,42 +1,44 @@
-import React from "react";
-import { FaCheckCircle } from "react-icons/fa";
+import React from 'react';
+import { IoMdCheckmark } from 'react-icons/io';
 
-const steps = [
-  "Course Information",
-  "Course Options",
-  "Course Content",
-  "Course Preview",
-];
+type Props = {
+  active: number;
+  setActive: (active: number) => void;
+};
 
-const CourseOptions = ({ currentStep }: { currentStep: number }) => {
+const CourseOptions: React.FC<Props> = ({ active, setActive }) => {
+  const options = [
+    "Course Information",
+    "Course Options",
+    "Course Content",
+    "Course Preview",
+  ];
+
   return (
-    <div className="flex flex-col space-y-6 p-6 bg-gray-800 text-white rounded-lg shadow-lg w-64">
-      {steps.map((step, index) => (
-        <div key={index} className="relative flex items-center space-x-4">
-          {/* Step Number / Check Icon */}
+    <div>
+      {options.map((option: any, index: number) => (
+        <div key={option} className="w-full flex py-5">
           <div
-            className={`w-8 h-8 flex items-center justify-center rounded-full font-semibold text-sm transition-all duration-300 ${
-              index <= currentStep
-                ? "bg-blue-500 text-white"
-                : "bg-gray-600 text-gray-300"
-            }`}
+            className={`w-[35px] h-[35px] rounded-full flex items-center justify-center ${
+              active + 1 > index ? "bg-blue-600" : "bg-[#384766]"
+            } relative`}
           >
-            {index < currentStep ? <FaCheckCircle size={16} /> : index + 1}
+            <IoMdCheckmark className="text-[25px]" />
+            {index !== 0 && ( 
+              <div
+                className={`absolute h-[30px] w-1 ${
+                  active + 1 > index ? "bg-blue-600" : "bg-[#384766]"
+                } bottom-[100%]`}
+              />
+            )}
           </div>
-
-          {/* Step Title */}
-          <span
-            className={`text-sm font-medium transition-all ${
-              index <= currentStep ? "text-white" : "text-gray-400"
+          <h5
+            className={`pl-3 text-[17px] ${
+              active == index ? "dark:text-white text-black" : "dark:text-white text-black"
             }`}
           >
-            {step}
-          </span>
-
-          {/* Connecting Line */}
-          {index < steps.length - 1 && (
-            <div className="absolute left-4 top-8 w-[2px] h-6 bg-gray-600"></div>
-          )}
+            {option}
+          </h5>
         </div>
       ))}
     </div>

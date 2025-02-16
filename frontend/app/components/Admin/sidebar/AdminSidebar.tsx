@@ -1,8 +1,8 @@
 import { useState } from "react";
+import Link from "next/link";
 import {
   Users,
   FileText,
-  BookOpen,
   Video,
   LayoutDashboard,
   CheckSquare,
@@ -23,45 +23,49 @@ const sections = [
   {
     title: "Data",
     items: [
-      { label: "Users", icon: Users },
-      { label: "Invoices", icon: FileText },
+      { label: "Users", icon: Users, href: "/admin//users" },
+      { label: "Invoices", icon: FileText, href: "/admin//invoices" },
     ],
   },
   {
     title: "Content",
     items: [
-      { label: "Create Course", icon: PlusSquare },
-      { label: "Live Courses", icon: Video },
+      { label: "Create Course", icon: PlusSquare, href: "/admin/create-course" },
+      { label: "Live Courses", icon: Video, href: "/admin//live-courses" },
     ],
   },
   {
     title: "Customization",
     items: [
-      { label: "Hero", icon: LayoutDashboard },
-      { label: "FAQ", icon: CheckSquare },
-      { label: "Categories", icon: Shield },
+      { label: "Hero", icon: LayoutDashboard, href: "/admin//customization/hero" },
+      { label: "FAQ", icon: CheckSquare, href: "/admin//customization/faq" },
+      { label: "Categories", icon: Shield, href: "/admin//customization/categories" },
     ],
   },
   {
     title: "Controllers",
-    items: [{ label: "Manage Team", icon: UserCog }],
+    items: [{ label: "Manage Team", icon: UserCog, href: "/admin//manage-team" }],
   },
   {
     title: "Analytics",
-    items: [{ label: "Courses Analytics", icon: BarChart2 }],
+    items: [{ label: "Courses Analytics", icon: BarChart2, href: "/admin//analytics/courses" }],
   },
 ];
 
 export default function AdminSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const { user } = useSelector((state: any) => state.auth);
+
   return (
     <nav
-      className={clsx(
-        "bg-[#0a1435] text-white h-screen p-4 flex flex-col justify-between transition-all duration-300 shadow-lg overflow-y-auto",
-        collapsed ? "w-20" : "w-64"
-      )}
-    >
+  className={clsx(
+    "fixed top-0 left-0 bg-[#0a1435] text-white h-screen p-4 flex flex-col justify-between transition-all duration-300 shadow-lg overflow-y-auto",
+    collapsed ? "w-20" : "w-64"
+  )}
+>
+
+  
+
       <div>
         <div className="flex items-center justify-between">
           {!collapsed && (
@@ -80,14 +84,14 @@ export default function AdminSidebar() {
         </div>
 
         <div className="flex flex-col items-center my-6">
-          <div className='800px:flex items-center gap-2'>
+          <div className="800px:flex items-center gap-2">
             {user && (user.avatar || user.avatar?.url) ? (
               <Image
                 className="w-12 h-12 rounded-full"
                 src={user.avatar?.url || user.avatar}
                 alt="User Avatar"
-                width={28}  // Required
-                height={28} // Required
+                width={28}
+                height={28}
               />
             ) : (
               <HiOutlineUserCircle
@@ -95,21 +99,22 @@ export default function AdminSidebar() {
                 className="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors"
               />
             )}
-
           </div>
           {!collapsed && (
             <>
-              <h3 className="mt-2 text-lg font-semibold">{user.name}</h3>
+              <h3 className="mt-2 text-lg font-semibold">{user?.name}</h3>
               <p className="text-sm text-gray-400">- Admin</p>
             </>
           )}
         </div>
 
         <ul className="space-y-2">
-          <li className="cursor-pointer flex items-center p-2 rounded-md hover:bg-green-500 transition-transform duration-300 transform hover:scale-105">
-            <Home className="w-6 h-6" />
-            {!collapsed && <span className="ml-3">Dashboard</span>}
-          </li>
+          <Link href="/dashboard" passHref>
+            <li className="cursor-pointer flex items-center p-2 rounded-md hover:bg-green-500 transition-transform duration-300 transform hover:scale-105">
+              <Home className="w-6 h-6" />
+              {!collapsed && <span className="ml-3">Dashboard</span>}
+            </li>
+          </Link>
 
           {sections.map((section) => (
             <div key={section.title} className="cursor-pointer">
@@ -119,13 +124,12 @@ export default function AdminSidebar() {
                 </h4>
               )}
               {section.items.map((item) => (
-                <li
-                  key={item.label}
-                  className="flex items-center p-2 rounded-md transition-transform duration-300 transform hover:scale-105 hover:bg-blue-600"
-                >
-                  <item.icon className="w-6 h-6" />
-                  {!collapsed && <span className="ml-3">{item.label}</span>}
-                </li>
+                <Link key={item.label} href={item.href} passHref>
+                  <li className="flex items-center p-2 rounded-md transition-transform duration-300 transform hover:scale-105 hover:bg-blue-600 cursor-pointer">
+                    <item.icon className="w-6 h-6" />
+                    {!collapsed && <span className="ml-3">{item.label}</span>}
+                  </li>
+                </Link>
               ))}
             </div>
           ))}
@@ -134,14 +138,18 @@ export default function AdminSidebar() {
 
       {/* Footer - Settings & Logout */}
       <div className="mt-10">
-        <li className="flex items-center p-2 rounded-md hover:bg-gray-700 transition-transform duration-300 transform hover:scale-105">
-          <Settings className="w-6 h-6" />
-          {!collapsed && <span className="ml-3">Settings</span>}
-        </li>
-        <li className="flex items-center p-2 rounded-md hover:bg-red-600 transition-transform duration-300 transform hover:scale-105">
-          <LogOut className="w-6 h-6" />
-          {!collapsed && <span className="ml-3">Logout</span>}
-        </li>
+        <Link href="/settings" passHref>
+          <li className="flex items-center p-2 rounded-md hover:bg-gray-700 transition-transform duration-300 transform hover:scale-105">
+            <Settings className="w-6 h-6" />
+            {!collapsed && <span className="ml-3">Settings</span>}
+          </li>
+        </Link>
+        <Link href="/logout" passHref>
+          <li className="flex items-center p-2 rounded-md hover:bg-red-600 transition-transform duration-300 transform hover:scale-105">
+            <LogOut className="w-6 h-6" />
+            {!collapsed && <span className="ml-3">Logout</span>}
+          </li>
+        </Link>
       </div>
     </nav>
   );

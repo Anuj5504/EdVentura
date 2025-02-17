@@ -33,7 +33,6 @@ const CourseInformations: React.FC<Props> = ({
       <h2 className="text-2xl dark:text-white font-semibold text-gray-800 mb-4">Course Information</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Course Name */}
         <div>
           <label className="block dark:text-white text-gray-700 font-medium">Course Name</label>
           <input
@@ -49,7 +48,6 @@ const CourseInformations: React.FC<Props> = ({
           />
         </div>
 
-        {/* Description */}
         <div>
           <label className="block dark:text-white text-gray-700 font-medium">Description</label>
           <textarea
@@ -65,7 +63,6 @@ const CourseInformations: React.FC<Props> = ({
           />
         </div>
 
-        {/* Price & Estimated Price */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block dark:text-white text-gray-700 font-medium">Price ($)</label>

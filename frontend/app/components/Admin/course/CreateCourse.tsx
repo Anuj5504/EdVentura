@@ -4,9 +4,11 @@ import CourseInformations from "./CourseInformations";
 import CourseData from "./CourseData";
 import CourseContent from "./CourseContent";
 import { title } from "process";
+import CoursePreview from "./CoursePreview";
 
 const CreateCourse = () => {
   const [active, setActive] = useState(0);
+
   const [courseInfo, setCourseInfo] = useState({
     name: "",
     description: "",
@@ -61,17 +63,19 @@ const CreateCourse = () => {
       level: courseInfo.level,
       thumbnail: courseInfo.thumbnail,
       demoUrl: courseInfo.demoUrl,
-      totalVideos:courseContentData.length,
-      benefits:formattedBenifit,
-      prerequisites:formattedPrerequisites,
-      courseData:formattedCourseContent
+      totalVideos: courseContentData.length,
+      benefits: formattedBenifit,
+      prerequisites: formattedPrerequisites,
+      courseData: formattedCourseContent
     }
 
     setcourseData(data);
-
-    console.log("data",courseData);
   }
-  console.log("data",courseData);
+
+  const handleCourseCreate = async (e: any) => {
+    const data = courseData;
+  }
+
   return (
     <div className="w-full flex flex-col lg:flex-row min-h-screen max-w-screen-xl mx-auto">
 
@@ -99,6 +103,13 @@ const CreateCourse = () => {
             active={active}
             setActive={setActive}
             handleSubmit={handleCourseSubmit}
+          />}
+        {active === 3 &&
+          <CoursePreview
+            active={active}
+            setActive={setActive}
+            courseData={courseData}
+            handleCourseCreate={handleCourseCreate}
           />}
       </div>
 

@@ -1,3 +1,4 @@
+import { uploadVideo } from "@/firebase/uploadVideo";
 import React, { useState } from "react";
 
 type Props = {
@@ -19,13 +20,20 @@ const CourseInformations: React.FC<Props> = ({
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
       setCourseInfo({ ...courseInfo, thumbnail: file });
-      setThumbnailPreview(URL.createObjectURL(file)); 
+      setThumbnailPreview(URL.createObjectURL(file));
     }
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setActive(active + 1);
+  };
+
+  const handleFileUpload = async (file: File) => {
+    if (!file) return;
+    const uploadedUrl=await uploadVideo(file);
+    setCourseInfo({ ...courseInfo, videoUrl: uploadedUrl });
+    console.log(uploadedUrl)
   };
 
   return (
@@ -132,17 +140,12 @@ const CourseInformations: React.FC<Props> = ({
           </div>
         </div>
 
-        <div>
-          <label className="block dark:text-white text-gray-700 font-medium">Demo URL</label>
+        <div className="mt-3">
+          <label className="block text-gray-700 font-medium">Upload Video</label>
           <input
-            type="url"
-            name="demoUrl"
-            value={courseInfo.demoUrl}
-            onChange={(e) =>
-              setCourseInfo({ ...courseInfo, demoUrl: e.target.value })
-            }
-            placeholder="Paste demo video URL"
-            required
+            type="file"
+            accept="video/*"
+            onChange={(e) => e.target.files && handleFileUpload(e.target.files[0])}
             className="mt-1 p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
           />
         </div>
@@ -170,7 +173,7 @@ const CourseInformations: React.FC<Props> = ({
           type="submit"
           className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition"
         >
-          Next Step 
+          Next Step
         </button>
       </form>
     </div>

@@ -3,9 +3,10 @@ import CourseOptions from "./CourseOptions";
 import CourseInformations from "./CourseInformations";
 import CourseData from "./CourseData";
 import CourseContent from "./CourseContent";
+import { title } from "process";
 
 const CreateCourse = () => {
-  const [active, setActive] = useState(2);
+  const [active, setActive] = useState(0);
   const [courseInfo, setCourseInfo] = useState({
     name: "",
     description: "",
@@ -35,9 +36,42 @@ const CreateCourse = () => {
     },
   ]);
 
-  const handleCourseSubmit= async()=>{
+  const [courseData, setcourseData] = useState({})
 
+  const handleCourseSubmit = async () => {
+    const formattedBenifit = benefits.map((benefit) => ({ title: benefit.title }));
+    const formattedPrerequisites = prerequisites.map((prerequisite) => ({ title: prerequisite.title }));
+    const formattedCourseContent = courseContentData.map((CourseContent) => ({
+      videoUrl: CourseContent.videoUrl,
+      title: CourseContent.title,
+      description: CourseContent.description,
+      videoSection: CourseContent.videoSection,
+      links: CourseContent.links.map((link) => ({ title: link.title, url: link.url })),
+      suggestion: CourseContent.suggestion,
+    }));
+
+    //prepare data object
+
+    const data = {
+      name: courseInfo.name,
+      description: courseInfo.description,
+      price: courseInfo.price,
+      estimatedPrice: courseInfo.estimatedPrice,
+      tags: courseInfo.tags,
+      level: courseInfo.level,
+      thumbnail: courseInfo.thumbnail,
+      demoUrl: courseInfo.demoUrl,
+      totalVideos:courseContentData.length,
+      benefits:formattedBenifit,
+      prerequisites:formattedPrerequisites,
+      courseData:formattedCourseContent
+    }
+
+    setcourseData(data);
+
+    console.log("data",courseData);
   }
+  console.log("data",courseData);
   return (
     <div className="w-full flex flex-col lg:flex-row min-h-screen max-w-screen-xl mx-auto">
 
@@ -51,20 +85,20 @@ const CreateCourse = () => {
           />}
         {active === 1 &&
           <CourseData
-          benefits={benefits}
-          setBenefits={setBenefits}
-          prerequisites={prerequisites}
-          setPrerequisits={setPrerequisites}
-          active={active}
-          setActive={setActive}
+            benefits={benefits}
+            setBenefits={setBenefits}
+            prerequisites={prerequisites}
+            setPrerequisits={setPrerequisites}
+            active={active}
+            setActive={setActive}
           />}
         {active === 2 &&
           <CourseContent
-          courseContentData={courseContentData}
-          setcourseContentData={setcourseContentData}
-          active={active}
-          setActive={setActive}
-          handleSubmit={handleCourseSubmit}
+            courseContentData={courseContentData}
+            setcourseContentData={setcourseContentData}
+            active={active}
+            setActive={setActive}
+            handleSubmit={handleCourseSubmit}
           />}
       </div>
 

@@ -78,14 +78,14 @@ const CourseData: React.FC<Props> = ({ benefits, setBenefits, prerequisites, set
             <div className="flex justify-between mt-2">
                 <button
                     onClick={()=>setActive(active-1)}
-                    className="w-52 bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition"
+                    className={`${styles.button} w-36 hover:bg-blue-600 `}
                     
                     >
-                    previous step
+                    Prev step
                 </button>
                 <button
-                    onClick={()=>setActive(active-1)}
-                    className="w-52 bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition"
+                    onClick={()=>setActive(active+1)}
+                    className={`${styles.button} w-36 hover:bg-blue-600`}
                 >
                     Next Step
                 </button>

@@ -1,7 +1,7 @@
 import { styles } from '@/app/styles/style';
 import React, { useState } from 'react';
-import { AiFillPlusCircle, AiOutlineDelete } from 'react-icons/ai';
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { AiFillDelete, AiFillPlusCircle, AiOutlineDelete } from 'react-icons/ai';
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icons/md';
 import { BiLinkAlt, BiSolidPencil } from 'react-icons/bi';
 import toast from 'react-hot-toast';
 
@@ -15,7 +15,7 @@ type Props = {
 
 const CourseContent: React.FC<Props> = ({ courseContentData, setcourseContentData, active, setActive, handleSubmit: handleCourseSubmit }) => {
     const [isCollapsed, setIsCollapsed] = useState(Array(courseContentData.length).fill(false));
-
+    const [ActiveSection, setActiveSection] = useState(0)
     const handleCollapseToggle = (index: number) => {
         const updatedCollapsed = [...isCollapsed];
         updatedCollapsed[index] = !updatedCollapsed[index];
@@ -30,7 +30,7 @@ const CourseContent: React.FC<Props> = ({ courseContentData, setcourseContentDat
 
     const handleRemoveUrl = (index: number, linkIndex: number) => {
         const updatedData = [...courseContentData];
-        updatedData[index].links.splice(linkIndex, 1);
+        updatedData[index].links.splice(linkIndex - 1, 1);
         setcourseContentData(updatedData);
     };
 
@@ -50,6 +50,42 @@ const CourseContent: React.FC<Props> = ({ courseContentData, setcourseContentDat
         }
     };
 
+    const addSection=()=>{
+        if(courseContentData[courseContentData.length-1].title==="" || 
+            courseContentData[courseContentData.length-1].videoUrl===""  ||
+            courseContentData[courseContentData.length-1].description==="" ||
+            courseContentData[courseContentData.length-1].links[0].title===""||
+            courseContentData[courseContentData.length-1].links[0].url===""
+        ) {
+            toast.error("Please fill all the data in previous section")
+        }
+        else {
+            setActiveSection(ActiveSection+1);
+            const newContent = {
+                videoUrl: "",
+                title: "",
+                description: "",
+                videoSection: `Untitled Section ${ActiveSection+1}`,
+                links: [{ title: "", url: "" }],
+            };
+            setcourseContentData([...courseContentData, newContent]);
+        }
+    }
+
+    const handleNextStep=()=>{
+        if(courseContentData[courseContentData.length-1].title==="" || 
+            courseContentData[courseContentData.length-1].videoUrl===""  ||
+            courseContentData[courseContentData.length-1].description==="" ||
+            courseContentData[courseContentData.length-1].links[0].title===""||
+            courseContentData[courseContentData.length-1].links[0].url===""
+        ) {
+            toast.error("Please fill all the data in current step")
+        }
+        else {
+           setActive(active+1);
+           handleCourseSubmit();
+        }
+    }
     return (
         <div className='w-[80%] m-auto rounded-lg shadow-lg'>
             {courseContentData?.map((item: any, index: number) => {
@@ -76,7 +112,7 @@ const CourseContent: React.FC<Props> = ({ courseContentData, setcourseContentDat
                                 {index + 1}. {item.title || "Video Title"}
                             </p>
                             <div className="flex items-center justify-center pt-3">
-                                <MdOutlineKeyboardArrowDown
+                                <MdOutlineKeyboardArrowUp
                                     fontSize="large"
                                     className="dark:text-white text-black cursor-pointer"
                                     style={{ transform: isCollapsed[index] ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s ease-in-out" }}
@@ -142,9 +178,17 @@ const CourseContent: React.FC<Props> = ({ courseContentData, setcourseContentDat
                                                 setcourseContentData(updateData);
                                             }}
                                         />
-                                        <p className='flex items-center text-[14px] dark:text-white text-black cursor-pointer' onClick={() => handleAddLink(index)}>
-                                            <BiLinkAlt className='h-11 w-5 ml-3' /> Add Link
-                                        </p>
+                                        <div className='flex gap-3'>
+
+                                            <p className='flex items-center text-[14px] dark:text-white text-black cursor-pointer' onClick={() => handleAddLink(index)}>
+                                                <BiLinkAlt className='h-11 w-5 ml-3' /> Add Link
+                                            </p>
+                                            {
+                                                linkIndex != 0 && <p className='flex items-center text-[14px] dark:text-white text-black cursor-pointer' onClick={() => handleRemoveUrl(index, linkIndex)}>
+                                                    <AiFillDelete className={`text-red-500 ${linkIndex == 0 ? "cursor-not-allowed" : "cursor-pointer"}`} />
+                                                </p>
+                                            }
+                                        </div>
                                     </div>
                                 ))}
                                 {index === courseContentData.length - 1 && (
@@ -157,6 +201,16 @@ const CourseContent: React.FC<Props> = ({ courseContentData, setcourseContentDat
                     </div>
                 );
             })}
+
+            <div className='flex items-center pt-4 text-[20px] dark:text-white text-black cursor-pointer' onClick={()=>addSection()}>
+            <AiFillPlusCircle className='mr-2' /> Add new Section
+            </div>
+
+
+            <div className="flex justify-between  pt-10">
+                <button className={`${styles.button} w-36`} onClick={()=>setActive(active-1)}>Prev Step</button>
+                <button className={`${styles.button} w-36`} onClick={()=>handleNextStep()}>Next Step</button>
+            </div>
         </div>
     );
 };
